@@ -5,7 +5,7 @@ import psycopg2
 
 # estabelecer conexão com o banco de dados
 
-conn = psycopg2.connectect(
+conn = psycopg2.connect(
     host="localhost",
     port="5433",
     dbname="farmaceutica",

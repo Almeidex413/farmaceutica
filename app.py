@@ -1,19 +1,41 @@
 import streamlit as st
 import pandas as pd
-import plotly as pl
 import psycopg2
 
-# estabelecer conexão com o banco de dados
-
+# Título do app
 st.header("Teste")
 
-conn = psycopg2.connect(
-    host="localhost",
-    port="5433",
-    dbname="farmaceutica",
-    user="postgres",
-    password="1234"
-)
+# Conexão com o banco
+@st.cache_resource
+def connect_to_db():
+    return psycopg2.connect(
+        host="localhost",
+        database="farmaceutica",
+        user="postgres",
+        password="1234",
+        port=5432
+    )
 
-#consulta docmentation https://www.postgresql.org/docs/current/index.html
+# Carregando dados
+@st.cache_data
+def load_data():
+    conn = connect_to_db()
+    df_clientes = pd.read_sql("SELECT * FROM clientes;", conn)
+    df_produtos = pd.read_sql("SELECT * FROM produtos;", conn)
+    conn.close()
+    return df_clientes, df_produtos
 
+# Exibir dados
+st.title("📦 Dados do Banco de Dados da Farmacêutica")
+
+try:
+    df_clientes, df_produtos = load_data()
+
+    st.subheader("👥 Tabela de Clientes")
+    st.dataframe(df_clientes)
+
+    st.subheader("💊 Tabela de Produtos")
+    st.dataframe(df_produtos)
+
+except Exception as e:
+    st.error(f"Erro ao carregar dados: {e}")

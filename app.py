@@ -9,7 +9,7 @@ conn = psycopg2.connect(
     host="localhost",
     port="5433",
     dbname="farmaceutica",
-    user="postgre",
+    user="postgres",
     password="1234"
 )
 

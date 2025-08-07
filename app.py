@@ -7,10 +7,11 @@ import psycopg2
 
 conn = psycopg2.connectect(
     host="localhost",
-    port="5435",
-    dbname="nome_do_banco",
-    user="seu_usuario",
-    password="sua_senha"
+    port="5433",
+    dbname="farmaceutica",
+    user="postgre",
+    password="1234"
 )
 
-#teste com git
+#consulta docmentation https://www.postgresql.org/docs/current/index.html
+
